@@ -1,0 +1,77 @@
+PREDICTION ON THE IRIS DATA SET
+========================================================
+author: G Srinithin
+date: 6/25/2020
+autosize: true
+
+Explaining of application
+========================================================
+IN this application they are two inputs which are "radio buttons" and "slider".<br>
+The radio button are helping you to choose the "machine learning algorithm" and <br> slider helps you
+to choose the prediction data set size.
+
+The prediction is done by three algorithms<br>
+=> random forest<br>
+=> multivarite regression<br>
+=> decision trees<br>
+
+these are done using <b>caret</b> .<br>
+there is correlated graph and "decision tree" <br>
+there is the plot which are differentiate with right and wrong prediction 
+```{r echo=FALSE,eval = TRUE}
+library(shiny)
+library(corrplot)
+library(lattice)
+library(ggplot2)
+library('e1071')
+library(rpart)
+library(rpart.plot)
+library(caret)
+library(gbm)
+library(randomForest)
+```
+
+the code for the model training
+========================================================
+
+```{r echo = TRUE,warning=FALSE,results = FALSE}
+model1 <- train(Species~.,data=iris,method = "rf")
+model2 <- train(Species~.,data=iris,method = "gbm")
+model3 <- train(Species~.,data=iris,method = "rpart")
+```
+
+plot of the corrplot and decision tree
+========================================================
+
+```{r, echo=FALSE,fig.align='center',fig.height=5,fig.width=5}
+corrPlot <- cor(iris[, -length(names(iris))])
+      corrplot(corrPlot, method="color")
+```
+```{r,echo=FALSE,fig.align='center',fig.height=5,fig.width=5}
+treeModel <- rpart(Species ~ ., data=iris, method="class")
+        prp(treeModel)
+```
+
+predicting the  species by the models
+========================================================
+## here the prediction done by "RandomForest"
+
+```{r, echo=FALSE,fig.align='center',fig.height=5,fig.width=5}
+ test <- iris
+    pred <- predict(model1,test)
+   test$predRight <- pred ==test$Species
+   qplot(Sepal.Width,Sepal.Length,colour=predRight,
+            data=test,main="predictions")
+```
+```{r,echo=FALSE,fig.align='center',fig.height=5,fig.width=5}
+test <- iris
+    pred <- predict(model1,test)
+   test$predRight <- pred ==test$Species
+    qplot(Petal.Width,Petal.Length,colour=predRight,
+            data=test,main="predictions")
+```
+
+
+
+
+
