@@ -1,0 +1,12 @@
+name: data_project
+title: data_project
+username:
+account: srinithin965
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2501918
+bundleId: 3314894
+url: https://srinithin965.shinyapps.io/data_project/
+when: 1593084664.4873
+asMultiple: FALSE
+asStatic: FALSE
